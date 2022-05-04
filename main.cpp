@@ -1,7 +1,7 @@
 /*
     Author: Emily McCue
-    Title: Programming Assignment 3
-    Due Date: April 19, 2022
+    Title: Programming Assignment 5
+    Due Date: May 10, 2022
             ---
     Class: CS 457, Section 1001
     Professor: Prof. Zhao
@@ -46,7 +46,7 @@ int main() {
     bool exit = false;
     char userInput[200];
     
-    cout << "-- CS457 PA2" << endl << endl;
+    cout << "-- CS457 PA5" << endl << endl;
 
     while(exit == false) {
         cin.getline(userInput, 200);
@@ -160,7 +160,7 @@ void nowUsing(string useDBName) {
             alter(useLoopTokens, useDBName);
         } else if (token1 == "SELECT" || token1 == "select") {
             select(useLoopTokens, useDBName);
-        } else if (token1 == "insert") {
+        } else if (token1 == "insert" || token1 == "INSERT") {
             insert(useLoopTokens, useDBName);
         } else if (token1 == "update") {
             update(useLoopTokens, useDBName);
@@ -562,6 +562,11 @@ void alter(char* useLoopTokens, string dbName) {
 */
 void select(char* useLoopTokens, string dbName) {
 
+    ifstream tableInUse;
+    string secondLine;
+    string line;
+    int counter = 0;
+
     bool exitLoop = false;
     string tempNextLine;
     string finalLine;
@@ -570,6 +575,33 @@ void select(char* useLoopTokens, string dbName) {
     useLoopTokens = strtok(NULL, " ");
     char* selectToken = useLoopTokens;
     string selectCheck = selectToken;
+
+    if (selectCheck.find("COUNT")) {
+        if (selectCheck.find('*')) {
+            getline(cin, secondLine);
+            string totalPath = dbName + "/Part.txt";
+            tableInUse.open(totalPath);
+
+            while (getline(tableInUse, line)) {
+                counter++;
+            }
+            // to account for the table header
+            counter--;
+            cout << "COUNT(*)" << endl << counter << endl;
+            tableInUse.close();
+
+        }
+    } else if (selectCheck.find("AVG")) {
+        if (selectCheck.find("Size")) {
+
+        }
+
+    } else if (selectCheck.find("MAX")) {
+        if (selectCheck.find("Size")) {
+
+        }
+
+    }
 
     // if selecting everything to display to screen
     if (selectCheck == "*") {
@@ -1748,7 +1780,7 @@ void insert(char* useLoopTokens, string dbName) {
     string pointToTB = charPointName;
 
     // this is the only command available currently
-    if (pointToTB == "into") {
+    if (pointToTB == "into" || pointToTB == "INTO") {
 
         // get next token in useLoopTokens
         useLoopTokens = strtok(NULL, " ");
@@ -1764,7 +1796,7 @@ void insert(char* useLoopTokens, string dbName) {
         string strHowToAlter = howToAlter;
 
         // this is the only command available currently
-        if (strHowToAlter == "values") {
+        if (strHowToAlter == "values" || strHowToAlter == "VALUES") {
 
             // get next token in useLoopTokens
             useLoopTokens = strtok(NULL, " ");
