@@ -1,0 +1,60 @@
+Title: Programming Assignment 3
+Author: Emily McCue
+Due Date: April 19, 2022
+Class: CS 457, Section 1001
+Professor: Prof. Zhao
+
+Overview:
+    In this assignment you will write a program that allows a database user to  make queries over multiple tables. That 
+    is,  you  will  implement  table  joins  using  techniques  we  discussed  in  the  class  (e.g.,  nested  loop).
+    This assignment assumes  the  metadata  and  data  manipulations  on  singular  tables  are  already  available,  
+    which  should  have  been provided (implemented) in the first two programming assignments. 
+
+System Design:
+    One directory -> database
+    One file -> table
+
+Database and Table Management:
+    The program organizes multiple databases by storing each database as a directory in the Programming Assignment 1
+    folder. In order to not create duplicate databases, each time a new database is requested to be created, the new
+    database's inputted name is stored as a string and the Programming Assignment 1 folder is combed through to see
+    if that name is already in use. If it has, it exits the request and displays to the user that it was unable to
+    complete the request because a database with that name already exists. If there is no database with the inputted
+    database name in the Programming Assignment 1 folder, then a database with that name is created and it displays
+    to the user that the database was created successfully.
+
+    The program manages multiple tables by storing each table as a file in each respective database (directory)
+    that was in use when the table was created. In order to create a table, a database must be in use as inputted by
+    the user. If there is no database in use, no table may be created. Once a database is in use, to create
+    a table, the inputted name of the table to be created is stored as a string and the database is combed through to
+    check if a file with the same name exists already. If the name is already in use, it exits the request and displays
+    to the user that it was unable to complete the request because a table with that name already exists in the
+    database that is currently in use. If the name is not in use, a file with the inputted name is created and stored
+    in the database in use. This allows the user to have tables with the same name as long as they are stored in
+    different databases, and prevents the user from creating duplicately named tables in the same database.
+
+Implementation of Functionalities:
+    Using C++ language, functionalities have been created including database creation and deletion, and table creation,
+    deletion, update and query.
+
+    Elaboration on the implementation of the Database creation and deletion; Table creation, deletion, update (ALTER), 
+    and query; Tuple update, insertion, and deletion can be found in the Programming Assignment 2 Design Document.
+
+    Tuple inner joining - this program inner joins tuple by storing the ID's of the columns being checked against
+        one another and finding their index withing the table. After this, it indexes to the correct position of
+        each line the the first table and saves the data stored at this position to a temporary variable. From this,
+        it indexes through each line of the second table and indexes to the correct position of each line and checks
+        this data against the temporary variable stored from the line being checked of the first table. In the case of
+        the operand given in the test.sql document '=', they are checked to see if they are the same data being stored
+        and if so, both lines from each table are formatted together and printed. If they are not equal, nothing is
+        displayed to the screen and the next line is evaluated. 
+
+    Tuple outer joining - this program inner joins tuple by storing the ID's of the columns being checked against
+        one another and finding their index withing the table. After this, it indexes to the correct position of
+        each line the the first table and saves the data stored at this position to a temporary variable. From this,
+        it indexes through each line of the second table and indexes to the correct position of each line and checks
+        this data against the temporary variable stored from the line being checked of the first table. In the case of
+        the operand given in the test.sql document '=', they are checked to see if they are the same data being stored
+        and if so, both lines from each table are formatted together and printed. If they are not equal, the specific
+        outer join is evaluated (in the case of the test.sql, 'left outer join') and that specific line is displayed
+        to the screen and the next line is evaluated.
